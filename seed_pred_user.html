@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FIND-S ALGORITHM</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background-color:gold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 10px 20px;
+            color:crimson;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: green;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .row div {
+            flex: 1;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find-S Algorithm</h1>
+        <form id="datasetForm">
+            <div id="inputRows">
+                <div class="row">
+                    <div><input type="text" placeholder="Color" required></div>
+                    <div><input type="text" placeholder="Toughness" required></div>
+                    <div><input type="text" placeholder="Fungus" required></div>
+                    <div><input type="text" placeholder="Appearance" required></div>
+                    <div><input type="text" placeholder="Poisonous (Yes/No)" required></div>
+                </div>
+            </div>
+            <button type="button" onclick="addRow()">Add Row</button>
+            <button type="submit">FIND HYPOTHESIS</button>
+        </form>
+        <h2>FINAL HYPOTHESIS</h2>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function addRow() {
+            const row = document.createElement('div');
+            row.className = 'row';
+            row.innerHTML = `
+                <div><input type="text" placeholder="Color" required></div>
+                <div><input type="text" placeholder="Toughness" required></div>
+                <div><input type="text" placeholder="Fungus" required></div>
+                <div><input type="text" placeholder="Appearance" required></div>
+                <div><input type="text" placeholder="Poisonous (Yes/No)" required></div>
+            `;
+            document.getElementById('inputRows').appendChild(row);
+        }
+
+        document.getElementById('datasetForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const inputs = document.querySelectorAll('#inputRows .row input');
+            const dataset = [];
+            for (let i = 0; i < inputs.length; i += 5) {
+                dataset.push([
+                    inputs[i].value,
+                    inputs[i+1].value,
+                    inputs[i+2].value,
+                    inputs[i+3].value,
+                    inputs[i+4].value
+                ]);
+            }
+            finds(dataset);
+        });
+
+        function finds(dataset) {
+            let hypothesis = ['0', '0', '0', '0'];
+
+            dataset.forEach(instance => {
+                if (instance[instance.length - 1] === 'Yes') {
+                    for (let i = 0; i < hypothesis.length; i++) {
+                        if (hypothesis[i] === '0') {
+                            hypothesis[i] = instance[i];
+                        } else if (hypothesis[i] !== instance[i]) {
+                            hypothesis[i] = '?';
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('result').textContent = hypothesis.join(', ');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> FIND-S ALGORITHM</title>
+    <style>
+        body{
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        .container{
+            max-width:900px;
+            margin: auto;
+            padding: 20px;
+            background-color:lime;
+        
+        }
+        table{
+            width:100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td{
+            border: 1px solid black;
+        }
+        th, td{
+            padding: 10px;
+            text-align: center;
+        }
+        th{
+            background-color: #f2f2f2;
+        }
+        button{
+            padding: 10px 20px;
+            color: rebeccapurple;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find-S Algorithm</h1>
+        <table id="dataset">
+            <thead>
+                <tr>
+                    <th>Color</th>
+                    <th>Toughness</th>
+                    <th>Fungus</th>
+                    <th>Appearance</th>
+                    <th>Poisonous</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Green</td>
+                    <td>Hard</td>
+                    <td>No</td>
+                    <td>Wrinkled</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Green</td>
+                    <td>Hard</td>
+                    <td>Yes</td>
+                    <td>Smooth</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Brown</td>
+                    <td>Soft</td>
+                    <td>No</td>
+                    <td>Wrinkled</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Orange</td>
+                    <td>Hard</td>
+                    <td>No</td>
+                    <td>Wrinkled</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Green</td>
+                    <td>Soft</td>
+                    <td>Yes</td>
+                    <td>Smooth</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Green</td>
+                    <td>Hard</td>
+                    <td>Yes</td>
+                    <td>Wrinkled</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Orange</td>
+                    <td>Hard</td>
+                    <td>No</td>
+                    <td>Wrinkled</td>
+                    <td>Yes</td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="finds()">FIND HYPOTHESIS</button>
+        <h2>FINAL HYPOTHESIS</h2>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function finds() {
+            const dataset = [
+                ['Green', 'Hard', 'No', 'Wrinkled', 'Yes'],
+                ['Green', 'Hard', 'Yes', 'Smooth', 'No'],
+                ['Brown', 'Soft', 'No', 'Wrinkled', 'No'],
+                ['Orange', 'Hard', 'No', 'Wrinkled', 'Yes'],
+                ['Green', 'Soft', 'Yes', 'Smooth', 'Yes'],
+                ['Green', 'Hard', 'Yes', 'Wrinkled', 'Yes'],
+                ['Orange', 'Hard', 'No', 'Wrinkled', 'Yes']
+            ];
+            
+            let hypothesis = ['Ø', 'Ø', 'Ø', 'Ø'];
+
+            dataset.forEach(instance => {
+                if (instance[instance.length - 1] === 'Yes') {
+                    for (let i = 0; i < hypothesis.length; i++) {
+                        if (hypothesis[i] === 'Ø') {
+                            hypothesis[i] = instance[i];
+                        } else if (hypothesis[i] !== instance[i]) {
+                            hypothesis[i] = '?';
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('result').textContent = hypothesis.join(', ');
+        }
+    </script>
+</body>
+</html>
